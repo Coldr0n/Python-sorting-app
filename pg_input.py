@@ -1,7 +1,19 @@
 import pygame as pg
 
-class Input(pg.sprite.Sprite):
-    def __init__(self, rect, font, color='white', bg_color='black', callback=lambda: None, *groups, max_char=30, numerical=False, text=""):
+
+class TextInput(pg.sprite.Sprite):
+    def __init__(
+        self,
+        rect,
+        font,
+        color="white",
+        bg_color="black",
+        callback=lambda: None,
+        *groups,
+        max_char=30,
+        numerical=False,
+        text=""
+    ):
         super().__init__(*groups)
         self.rect = rect
 
@@ -29,7 +41,9 @@ class Input(pg.sprite.Sprite):
 
     def set_text(self, text: str):
         if len(text) <= self.max_char:
-            if (not self.numerical and text.isalnum()) or (self.numerical and text.isnumeric()):
+            if (not self.numerical and text.isalnum()) or (
+                self.numerical and text.isnumeric()
+            ):
                 self.text = text
                 self.update_image()
 
@@ -41,7 +55,9 @@ class Input(pg.sprite.Sprite):
         self.update_image()
 
     def update_image(self):
-        bg_color = pg.Color(self.bg_color) - pg.Color('grey5') if self.focus else self.bg_color
+        bg_color = (
+            pg.Color(self.bg_color) - pg.Color("grey5") if self.focus else self.bg_color
+        )
         self.image.fill(bg_color)
         text_surf = self.font.render(self.text, True, self.color)
         text_rect = text_surf.get_rect(center=self.image.get_rect().center)
